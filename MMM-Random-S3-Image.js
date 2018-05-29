@@ -5,30 +5,52 @@
 
 Module.register("MMM-Random-S3-Image", {
   defaults: {
-	Bucket: 'YOUR_BUCKET_NAME',
-	ACL: 'ACCESS_CONTROL_LIST',
+	Bucket: 'YOUR_BUCKET_NAME'
   },
 
   start: function() {
 	var self = this;
 	Log.log("Starting module: " + this.name);
 	this.image = null;
-	this.emotion = null;
+	self.sendSocketNotification("RANDOM_IMAGE", self.config);
 	setInterval(function() {
-		self.sendSocketNotification("
+		self.sendSocketNotification("RANDOM_IMAGE", self.config);
+	}, 50000);
   },
 
   getDom: function() {
+	Log.log('change image');
+	var wrapper = document.createElement("div");
+	var date = document.createElement("div");
+	var img = document.createElement("img");
 
+	var imageDate = this.image.split('/')[1];
+	var year = imageDate.substring(0, 2);
+	var month = imageDate.substring(2, 4);
+	var day = imageDate.substring(4, 6);
+	
+	date.innerHTML = year + "년 " + month + "월 " + day + "일";
+	img.width = '320';
+	img.height = '180';
+	img.src = 'https://s3-ap-northeast-1.amazonaws.com/hellomirror3/' + this.image;
+	
+	wrapper.appendChild(date);
+	wrapper.appendChild(img);
+	return wrapper;
   },
 
   socketNotificationReceived: function(notification, payload) {
 	var self = this;
-	if(notification == "CHANGE_IMAGE") {
-		this.image = payload.image;
-		this.emotion = payload.emotion;
-		console.log("success change image : " +  payload.image + ", " + payload.emotion);
-		updateDom(1000);
+
+	if("FAIL_CHANGE_IMAGE") {
+		console.log("fail change image : " + payload);
+		this.image = payload;
+		self.updateDom(1000);
+	}
+	else if("SUCCESS_CHANGE_IMAGE") {
+		console.log("success change image : " + payload);
+		this.image = payload;
+		self.updateDom(1000);
 	}
   },
 
