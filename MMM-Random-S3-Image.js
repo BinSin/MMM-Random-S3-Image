@@ -19,15 +19,14 @@ Module.register("MMM-Random-S3-Image", {
   },
 
   getDom: function() {
-	Log.log('change image');
 	var wrapper = document.createElement("div");
 	var date = document.createElement("div");
 	var img = document.createElement("img");
 
 	var imageDate = this.image.split('/')[1];
-	var year = imageDate.substring(0, 2);
-	var month = imageDate.substring(2, 4);
-	var day = imageDate.substring(4, 6);
+	var year = imageDate.substring(0, 4);
+	var month = imageDate.substring(4, 6);
+	var day = imageDate.substring(6, 8);
 	
 	date.innerHTML = year + "년 " + month + "월 " + day + "일";
 	img.width = '320';

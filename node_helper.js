@@ -27,7 +27,10 @@ module.exports = NodeHelper.create({
 		 Bucket: payload.Bucket
 	 };
 	 s3.listObjects(params, function(err, data) {
-		 if(err) {
+		 if(err = "Picutres/" || data = "Picutres/") {
+			return;
+		 }
+		 else if(err) {
 			self.sendSocketNotifcaiton("FAIL_CHANGE_IMAGE", err); 
 		 }
 		 else {
