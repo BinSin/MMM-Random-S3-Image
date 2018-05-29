@@ -27,7 +27,7 @@ module.exports = NodeHelper.create({
 		 Bucket: payload.Bucket
 	 };
 	 s3.listObjects(params, function(err, data) {
-		 if(err = "Picutres/" || data = "Picutres/") {
+		 if(err == "Picutres/" || data == "Picutres/") {
 			return;
 		 }
 		 else if(err) {
