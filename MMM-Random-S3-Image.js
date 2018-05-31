@@ -23,7 +23,7 @@ Module.register("MMM-Random-S3-Image", {
 	var date = document.createElement("div");
 	var img = document.createElement("img");
 
-	var imageDate = this.image.split('/')[1];
+	var imageDate = new String(this.image);
 	var year = imageDate.substring(0, 4);
 	var month = imageDate.substring(4, 6);
 	var day = imageDate.substring(6, 8);
@@ -40,14 +40,14 @@ Module.register("MMM-Random-S3-Image", {
 
   socketNotificationReceived: function(notification, payload) {
 	var self = this;
-
-	if("FAIL_CHANGE_IMAGE") {
-		console.log("fail change image : " + payload);
+	
+	if("SUCCESS_CHANGE_IMAGE") {
+		console.log("success change image : " + payload);
 		this.image = payload;
 		self.updateDom(1000);
-	}
-	else if("SUCCESS_CHANGE_IMAGE") {
-		console.log("success change image : " + payload);
+	}	
+	else if("FAIL_CHANGE_IMAGE") {
+		console.log("fail change image : " + payload);
 		this.image = payload;
 		self.updateDom(1000);
 	}

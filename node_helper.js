@@ -27,16 +27,13 @@ module.exports = NodeHelper.create({
 		 Bucket: payload.Bucket
 	 };
 	 s3.listObjects(params, function(err, data) {
-		 if(err == "Picutres/" || data == "Picutres/") {
-			return;
-		 }
-		 else if(err) {
-			self.sendSocketNotifcaiton("FAIL_CHANGE_IMAGE", err); 
-		 }
-		 else {
+		 if(!err) {
 			var len = data.Contents.length;
 			var random = Math.floor(Math.random() * len);
 			self.sendSocketNotification("SUCCESS_CHANGE_IMAGE", data.Contents[random].Key);
+		 }
+		 else {
+			self.sendSocketNotifcaiton("FAIL_CHANGE_IMAGE", err); 
 		 }
 	 });
 
